@@ -6,9 +6,7 @@ module Application
       end
 
       def index
-        layout do
-          "#{predicate} a known word"
-        end
+        layout { "#{predicate} a known word" }
       end
 
       private

@@ -1,9 +1,10 @@
 module Application
   class Request
-    def initialize(request_lines)
+    def initialize(request_lines, client)
       @http_method = nil
       @full_path   = nil
       @protocol    = nil
+      @client = client
       @request_info, *@header_pairs = request_lines
     end
 
@@ -14,7 +15,7 @@ module Application
       end
     end
 
-    %w[Accept User-Agent Host Port Origin].each do |name|
+    %w[Accept User-Agent Host Port Origin Content-Length].each do |name|
       define_method(name.downcase.tr('-', '_')) do
         headers.fetch(name, nil)
       end
@@ -42,13 +43,18 @@ module Application
       end
     end
 
+    def body
+      return nil unless content_length.to_i > 0
+      @body ||= client.read(content_length.to_i)
+    end
+
     def shutdown?
       base_path == '/shutdown'
     end
 
     private
 
-    attr_reader :request_info, :header_pairs
+    attr_reader :request_info, :header_pairs, :client
 
     def header_pairs_hash
       header_pairs.each_with_object({}) do |pair, hash|

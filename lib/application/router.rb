@@ -22,8 +22,8 @@ module Application
       { stautus: :not_found }
     end
 
-    def error
-      { content: e, status: :error }
+    def error(e)
+      { content: "#{e.message}\n#{e.backtrace.join("\n")}", status: :error }
     end
 
     def shutdown
@@ -34,11 +34,11 @@ module Application
       @routes ||= Routes.new
     end
 
-    def respond_with(content: '', status: :ok, redirect: nil, shutdown: false)
+    def respond_with(content: '', status: :ok, location: nil, shutdown: false)
       Response.new(
         content: content,
         status: status,
-        redirect: redirect,
+        location: location,
         shutdown: shutdown
       )
     end

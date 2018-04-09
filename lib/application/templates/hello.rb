@@ -6,9 +6,7 @@ module Application
       end
 
       def index
-        layout do
-          "Hello World! (#{count})"
-        end
+        layout { "Hello World! (#{count})" }
       end
 
       private

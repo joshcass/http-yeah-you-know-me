@@ -6,9 +6,7 @@ module Application
       end
 
       def index
-        layout do
-          time
-        end
+        layout { time }
       end
 
       private

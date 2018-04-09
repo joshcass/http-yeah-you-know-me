@@ -1,8 +1,8 @@
 require File.join(__dir__, 'config', 'boot.rb')
 
 class App
-  def call(request_lines)
-    router.call(request_from(request_lines))
+  def call(request_lines, client)
+    router.call(request_from(request_lines, client))
   end
 
   def env
@@ -11,8 +11,8 @@ class App
 
   private
 
-  def request_from(request_lines)
-    Application::Request.new(request_lines)
+  def request_from(request_lines, client)
+    Application::Request.new(request_lines, client)
   end
 
   def router

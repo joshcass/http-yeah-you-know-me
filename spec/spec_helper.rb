@@ -15,7 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'pry'
-require 'timecop'
+require 'httparty'
 
 Dir[File.join(__dir__, '..', 'lib', '**', '*.rb')].sort.each { |f| require f }
 Dir[File.join(__dir__, 'support', '**', '*.rb')].sort.each   { |f| require f }

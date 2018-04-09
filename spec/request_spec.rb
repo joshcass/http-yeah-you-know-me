@@ -8,10 +8,15 @@ RSpec.describe Application::Request do
      'Connection: close',
      'Host: localhost:3000',
      'Port: 3000',
-     'Origin: localhost']
+     'Origin: localhost',
+     'Content-Length: 1']
   end
+  let(:client)  { double }
+  let(:subject) { described_class.new(request_lines, client) }
 
-  let(:subject) { described_class.new(request_lines) }
+  before do
+    allow(client).to receive(:read) { '1' }
+  end
 
   specify { expect(subject.http_method).to eq 'GET' }
   specify { expect(subject.full_path).to eq '/index?param=value' }
@@ -23,4 +28,6 @@ RSpec.describe Application::Request do
   specify { expect(subject.host).to eq 'localhost:3000' }
   specify { expect(subject.port).to eq '3000' }
   specify { expect(subject.origin).to eq 'localhost' }
+  specify { expect(subject.content_length).to eq '1' }
+  specify { expect(subject.body).to eq( '1' ) }
 end

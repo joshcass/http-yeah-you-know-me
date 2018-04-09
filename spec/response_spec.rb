@@ -13,7 +13,7 @@ RSpec.describe Application::Response do
     end
 
     it 'returns the correct headers with a redirect' do
-      expect(described_class.new(content: '', status: :ok, redirect: 'http://example.com').headers).to eq(
+      expect(described_class.new(content: '', status: :ok, location: 'http://example.com').headers).to eq(
         "HTTP/1.1 200 OK\r\nLocation: http://example.com\r\nDate: Sat,  1 Jan 2000 20:15:01 UTC\r\nServer: Ruby\r\nContent-Type: text/html; charset=iso-8859-1\r\nContent-Length: 0\r\n\r\n"
       )
     end

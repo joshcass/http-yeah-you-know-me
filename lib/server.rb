@@ -25,7 +25,7 @@ class Server
       request_lines << line.chomp
     end
 
-    response = app.call(request_lines)
+    response = app.call(request_lines, client)
 
     client.puts response.headers
     client.puts response.content
