@@ -12,10 +12,10 @@ RSpec.configure do |config|
       self.class.post(*args)
     end
 
-    @thread = Thread.new { Server.new(port: 3000).start }
+    @pid = Process.fork { Server.new(port: 3000).start }
   end
 
   config.after :example, type: :request do
-    @thread.exit
+    Process.kill('TERM', @pid)
   end
 end

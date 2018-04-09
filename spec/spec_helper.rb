@@ -14,8 +14,13 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'pry'
+require 'timecop'
+
 Dir[File.join(__dir__, '..', 'lib', '**', '*.rb')].sort.each { |f| require f }
 Dir[File.join(__dir__, 'support', '**', '*.rb')].sort.each   { |f| require f }
+
+ENV['APP_ENV'] ||= 'test'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
