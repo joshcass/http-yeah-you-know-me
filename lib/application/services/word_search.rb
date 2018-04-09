@@ -14,11 +14,7 @@ module Application
       attr_reader :word
 
       def dictionary
-        @dictionary ||= JSON.parse File.read(file_path)
-      end
-
-      def file_path
-        File.join(__dir__, '..', '..', 'config', 'dictionary.json')
+        @dictionary ||= Models::Dictionary.all
       end
     end
   end

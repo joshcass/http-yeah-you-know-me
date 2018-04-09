@@ -25,7 +25,7 @@ module Application
       end
 
       def record_guess(guess)
-        game.update(guess: guess.to_i)
+        game.guess!(guess.to_i)
       end
 
       def template

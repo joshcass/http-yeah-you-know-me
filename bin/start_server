@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'optparse'
+
+require File.join(__dir__, '..', 'lib', 'server.rb')
+
+options = {}
+OptionParser.new do |opt|
+  opt.on('-p', '--port PORT', 'Port to listen on') { |o| options.store(:port, o) }
+end.parse!
+
+Server.new(port: options.fetch(:port, 9292)).start

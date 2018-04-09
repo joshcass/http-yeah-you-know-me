@@ -12,14 +12,14 @@ RSpec.describe Application::Services::Game do
     end
   end
 
-  describe '#update' do
-    it 'updates the game with a new guess' do
-      game.update(guess: 3)
+  describe '#guess!' do
+    it 'guess!s the game with a new guess' do
+      game.guess!(3)
       expect(game.current_guess?).to be true
     end
 
     it 'increments the guess count' do
-      game.update(guess: 3)
+      game.guess!(3)
       expect(game.guess_count).to eq 1
     end
   end
@@ -30,17 +30,17 @@ RSpec.describe Application::Services::Game do
     end
 
     it 'returns the correct status if the guess is low' do
-      game.update(guess: 4)
+      game.guess!(4)
       expect(game.status).to eq :too_low
     end
 
     it 'returns the correct status if the guess it too high' do
-      game.update(guess: 6)
+      game.guess!(6)
       expect(game.status).to eq :too_high
     end
 
     it 'returns the correct status if the guess correct' do
-      game.update(guess: 5)
+      game.guess!(5)
       expect(game.status).to eq :correct
     end
   end
@@ -52,14 +52,14 @@ RSpec.describe Application::Services::Game do
 
     it 'returns false if the current guess is correct' do
       allow(game).to receive(:answer) { 5 }
-      game.update(guess: 5)
+      game.guess!(5)
 
       expect(game.current_game?).to be false
     end
 
     it 'returns true if the current guess is wrong' do
       allow(game).to receive(:answer) { 5 }
-      game.update(guess: 4)
+      game.guess!(4)
 
       expect(game.current_game?).to be true
     end

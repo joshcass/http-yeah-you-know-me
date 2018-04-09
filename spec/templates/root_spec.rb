@@ -8,8 +8,9 @@ RSpec.describe Application::Templates::Root do
      'Origin: 127.0.0.1',
      'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8']
   end
+  let(:client)  { double }
 
-  let(:request) { Application::Request.new(request_lines) }
+  let(:request) { Application::Request.new(request_lines, double) }
 
   let(:subject) { described_class.new(request) }
 

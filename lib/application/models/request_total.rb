@@ -1,5 +1,5 @@
 module Application
-  module Services
+  module Models
     class RequestTotal
       attr_reader :count
 

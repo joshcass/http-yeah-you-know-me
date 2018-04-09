@@ -33,6 +33,11 @@ module Application
       end
     end
 
+    def force_error(request)
+      action = parse_method(request.http_method)
+      error_controller.public_send(action)
+    end
+
     def defined?(route)
       self.class.instance_methods(false).include?(route.to_sym)
     end
@@ -65,6 +70,10 @@ module Application
 
     def game_controller
       @game_controller ||= Contollers::GameController.new
+    end
+
+    def error_controller
+      @error_controller ||= Contollers::ErrorController.new
     end
   end
 end

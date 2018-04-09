@@ -19,7 +19,7 @@ module Application
     end
 
     def not_found
-      { stautus: :not_found }
+      { status: :not_found }
     end
 
     def error(e)
@@ -44,7 +44,7 @@ module Application
     end
 
     def request_total
-      @request_total ||= Services::RequestTotal.new
+      @request_total ||= Models::RequestTotal.new
     end
   end
 end

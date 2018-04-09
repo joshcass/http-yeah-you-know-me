@@ -7,10 +7,18 @@ class Server
   end
 
   def start
+    # preload the app since we're pretending we have a db by
+    # keeping everything in memory and using ivars
     app
 
     puts "TCP Server listening on port #{port}" unless app.env == 'test'
     listen
+  end
+
+  def stop
+    server.flush
+    server.close
+    exit 0
   end
 
   private
@@ -31,9 +39,8 @@ class Server
     client.puts response.content
     client.close
 
-    listen unless response.shutdown?
-  ensure
-    server.close
+    stop if response.shutdown?
+    listen
   end
 
   def app
