@@ -35,17 +35,25 @@ module Application
 
     def route_name
       @route_name ||= begin
-        if base_path == '/'
-          :root
-        else
-          base_path.tr('/', '').tr('-', '_')
-        end
-      end
+                        if base_path == '/'
+                          :root
+                        else
+                          base_path.tr('/', '').tr('-', '_')
+                        end
+                      end
     end
 
     def body
       return nil unless content_length.to_i > 0
       @body ||= client.read(content_length.to_i)
+    end
+
+    def format
+      if accept.match?(/^application\/json/i)
+        :json
+      else
+        :html
+      end
     end
 
     def shutdown?

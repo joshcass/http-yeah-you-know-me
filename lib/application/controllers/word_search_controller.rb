@@ -1,20 +1,22 @@
 module Application
   module Contollers
     class WordSearchController
-      def index(params)
+      def index(params, format)
         return { status: :forbidden } unless word_present?(params)
 
-        { content: Templates::WordSearch.new(predicate(params['word'])).index }
+        { content: send(format, params['word']) }
       end
 
       private
 
-      def predicate(word)
-        word_search.known?(word) ? "#{word} is" : "#{word} is not"
+      attr_reader :word
+
+      def html(word)
+        Templates::WordSearch.new(word).index
       end
 
-      def word_search
-        @word_search ||= Services::WordSearch.new
+      def json(word)
+        JSON.generate Templates::WordSearchJson.new(word).index
       end
 
       def word_present?(params)

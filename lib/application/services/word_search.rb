@@ -2,10 +2,10 @@ module Application
   module Services
     class WordSearch
       def known?(word)
-        possible_words(word).any?
+        possible_matches(word).any?
       end
 
-      def possible_words(word)
+      def possible_matches(word)
         dictionary.select { |dictionary_word| dictionary_word.match?(word) }
       end
 

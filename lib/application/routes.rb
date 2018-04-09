@@ -17,7 +17,7 @@ module Application
 
     def word_search(request)
       action = parse_method(request.http_method)
-      word_search_controller.public_send(action, request.params)
+      word_search_controller.public_send(action, request.params, request.format)
     end
 
     def start_game(request)

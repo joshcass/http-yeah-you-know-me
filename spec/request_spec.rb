@@ -30,4 +30,15 @@ RSpec.describe Application::Request do
   specify { expect(subject.origin).to eq 'localhost' }
   specify { expect(subject.content_length).to eq '1' }
   specify { expect(subject.body).to eq( '1' ) }
+
+  describe '#format' do
+    it 'returns json if requested' do
+      request_lines[1] = 'Accept: application/json'
+      expect(subject.format).to eq :json
+    end
+
+    it 'returns html otherwise' do
+      expect(subject.format).to eq :html
+    end
+  end
 end

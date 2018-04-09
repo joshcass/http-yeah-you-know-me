@@ -10,4 +10,15 @@ RSpec.describe Application::Services::WordSearch do
       expect(subject.known?('asdf')).to be false
     end
   end
+
+  describe '#possible_matches' do
+    it 'returns one word if it is an exact match' do
+      expect(subject.possible_matches('pizza')).to eq ['pizza']
+    end
+
+    it 'returns multiple results if it is a partial match' do
+      expect(subject.possible_matches('pizz'))
+        .to match_array %w[pizza pizzeria pizzicato pizzle spizzerinctum]
+    end
+  end
 end
