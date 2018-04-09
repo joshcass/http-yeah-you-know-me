@@ -27,20 +27,29 @@ class Server
 
   def listen
     request_lines = []
-    client = server.accept
 
-    while line = client.gets and !line.chomp.empty?
-      request_lines << line.chomp
+    Thread.start(server.accept) do |client|
+
+      while line = client.gets and !line.chomp.empty?
+        request_lines << line.chomp
+      end
+
+      semaphore.synchronize do
+        response = app.call(request_lines, client)
+
+        client.puts response.headers
+        client.puts response.content
+        client.close
+
+        stop if response.shutdown?
+      end
     end
 
-    response = app.call(request_lines, client)
-
-    client.puts response.headers
-    client.puts response.content
-    client.close
-
-    stop if response.shutdown?
     listen
+  end
+
+  def semaphore
+    @semaphore ||= Mutex.new
   end
 
   def app

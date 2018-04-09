@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Application
   module Services
     class Game

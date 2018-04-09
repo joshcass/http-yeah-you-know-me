@@ -38,6 +38,11 @@ module Application
       error_controller.public_send(action)
     end
 
+    def sleepy(request)
+      action = parse_method(request.http_method)
+      sleepy_controller.public_send(action)
+    end
+
     def defined?(route)
       self.class.instance_methods(false).include?(route.to_sym)
     end
@@ -74,6 +79,10 @@ module Application
 
     def error_controller
       @error_controller ||= Contollers::ErrorController.new
+    end
+
+    def sleepy_controller
+      @sleepy_controller ||= Contollers::SleepyController.new
     end
   end
 end
